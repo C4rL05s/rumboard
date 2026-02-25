@@ -9,6 +9,9 @@ To see the backend please visit https://github.com/C4rL05s/rumboard-backend
 - Express
 - Tailwindcss
 - Node.js
+- cors
+- bcrypt
+- better-sqlite3
 
 ## **Project Setup**
 
