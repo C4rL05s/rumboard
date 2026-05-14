@@ -15,44 +15,59 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: { requiresAuth: true }
     },
     // Route for login page component
     {
       path: '/login',
       name: 'login',
       component: LoginView,
+      
     },
     // Route for Sign Up page component
     {
       path: '/signup',
       name: 'signup',
       component: SignupView,
+      
     },
     // Route for Messages page component
     {
       path: '/messages',
       name: 'messages',
       component: MessagesView,
+      meta: { requiresAuth: true }
     },
     // Route for Notification page component
     {
       path: '/notifications',
       name: 'notifications',
       component: NotificationsView,
+      meta: { requiresAuth: true }
     },
     // Route for profile page component
     {
       path: '/profile',
       name: 'profile',
-      component: ProfileView
+      component: ProfileView,
+      meta: { requiresAuth: true }
     },
     // Route for thread page component
     {
       path: '/thread',
       name: 'thread',
-      component: ThreadView
+      component: ThreadView,
+      meta: { requiresAuth: true }
     },
   ],
 })
 
+// Ensures that only registered users can access and interact with the website 
+router.beforeEach((to, from) => {
+  if(!localStorage.getItem('username') 
+    && to.name !== 'login' && to.meta.requiresAuth){
+    
+      return { name: 'login'}
+  }
+})
 export default router

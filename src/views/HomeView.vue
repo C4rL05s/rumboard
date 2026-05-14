@@ -27,6 +27,20 @@ function submitPost() {
   newPost.value = ''
 }
 
+// Like a post in main feed 
+function likePost(post) {
+  console.log(post)
+  const likedPost = {
+    post_id: post.id,
+    liker: localStorage.getItem('username')
+  }
+  fetch('http://localhost:3000/likes', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(likedPost)
+  })
+}
+
 // Listen for new posts from other users
 socket.on('post-received', (post) => {
   posts.value.unshift(post)
@@ -51,6 +65,12 @@ socket.on('post-received', (post) => {
         <p class="font-semibold">{{ post.username }}</p>
         <p>{{ post.content }}</p>
         <p class="text-sm text-gray-500">{{ post.created_at }}</p>
+        <div class="flex justify-end mt-1">
+          <button
+            @click = "likePost(post)"
+            class = "px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >Like</button>
+        </div>
       </div>
     </div>
   </main>
