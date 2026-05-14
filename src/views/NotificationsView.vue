@@ -1,4 +1,16 @@
 <script setup>
+import { ref, onMounted } from 'vue'
+import socket from '../socket'
+
+const likes = ref([])
+const newLikes = ref('')
+
+onMounted(async () => {
+  const response = await fetch('http://localhost:3000/likes')
+  likes.value = await response.json()
+})
+
+
 </script>
 
 <template>
