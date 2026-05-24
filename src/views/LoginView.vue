@@ -2,18 +2,20 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { RouterLink } from 'vue-router'
+import socket from '../socket'
 
 const router = useRouter()
 const username = ref('')
 const password = ref('')
 const error = ref('')
+const API_URL = import.meta.env.VITE_API_URL
 
 async function submitLogin() {
   if (!username.value || !password.value) {
     error.value = 'Please fill in all fields'
     return
   }
-  const response = await fetch('http://localhost:3000/login', {
+  const response = await fetch(`${API_URL}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -27,6 +29,7 @@ async function submitLogin() {
     return
   }
   localStorage.setItem('username', data.username)
+  socket.emit('connect-user', data.username)  
   router.push('/')
 }
 </script>

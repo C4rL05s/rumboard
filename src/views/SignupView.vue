@@ -9,6 +9,7 @@ const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const error = ref('')
+const API_URL = import.meta.env.VITE_API_URL
 
 async function submitSignup() {
   if (!username.value || !email.value || !password.value) {
@@ -19,7 +20,7 @@ async function submitSignup() {
     error.value = 'Passwords do not match'
     return
   }
-  const response = await fetch('http://localhost:3000/register', {
+  const response = await fetch(`${API_URL}/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

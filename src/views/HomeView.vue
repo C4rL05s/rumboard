@@ -4,10 +4,11 @@ import socket from '../socket'
 
 const posts = ref([])
 const newPost = ref('')
+const API_URL = import.meta.env.VITE_API_URL
 
 // Load existing posts when page opens
 onMounted(async () => {
-  const response = await fetch('http://localhost:3000/posts')
+  const response = await fetch(`${API_URL}/posts`)
   posts.value = await response.json()
 })
 
@@ -19,7 +20,7 @@ function submitPost() {
     username: localStorage.getItem('username')
   }
   socket.emit('new-post', post)
-  fetch('http://localhost:3000/posts', {
+  fetch(`${API_URL}/posts`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(post)
@@ -34,7 +35,7 @@ function likePost(post) {
     post_id: post.id,
     liker: localStorage.getItem('username')
   }
-  fetch('http://localhost:3000/likes', {
+  fetch(`${API_URL}/likes`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(likedPost)
